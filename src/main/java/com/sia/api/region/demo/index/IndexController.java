@@ -1,6 +1,6 @@
 package com.sia.api.region.demo.index;
 
-import com.sia.api.region.demo.events.EventController;
+import com.sia.api.region.demo.gis.aoi.AoiController;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,16 +13,14 @@ public class IndexController {
     //링크 정보만 리턴한다.
 
     /**
-     * ResourceSupport is now RepresentationModel
-     * Resource is now EntityModel
-     * Resources is now CollectionModel
-     * PagedResources is now PagedModel
-     * @return
+     * @author joonhokim
+     * @date 2022/03/28
+     * @description 잘못 된 url이 요청 될 경우 index로 이동
      */
     @GetMapping("/api")
     public RepresentationModel index() {
         var index = new RepresentationModel<>();
-        index.add(linkTo(EventController.class).withRel("events"));
+        index.add(linkTo(AoiController.class).withRel("aois"));
 
         return index;
     }

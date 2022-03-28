@@ -1,7 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.6.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-//    id 'org.asciidoctor.convert' version '1.5.8'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
     id 'java'
 }
@@ -52,7 +51,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-//    testImplementation 'com.h2database:h2'
     testImplementation "org.testcontainers:postgresql:1.16.3"
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
@@ -62,7 +60,8 @@ dependencies {
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.4'
 
-
+    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.6.7.Final'
+    implementation 'org.locationtech.jts:jts-core:1.18.2'
 }
 
 tasks.named('test') {

@@ -11,8 +11,8 @@
 --  	area geometry('Polygon', 4326)
 -- );
 
--- INSERT INTO aoi (name, area) VALUES ('북한산', st_geomfromtext('Polygon((127.02 37.742, 127.023 37.664, 126.945 37.605, 126.962 37.692, 127.02 37.742))', 4326));
--- INSERT INTO aoi (name, area) VALUES ('관악산', st_geomfromtext('Polygon((126.985 37.464, 126.980 37.429, 126.933 37.406, 126.910 37.432, 126.931 37.456, 126.985 37.464))', 4326));
+-- INSERT INTO aoi VALUES (default, '북한산', st_geomfromtext('Polygon((127.02 37.742, 127.023 37.664, 126.945 37.605, 126.962 37.692, 127.02 37.742))', 4326));
+-- INSERT INTO aoi VALUES (default, '관악산', st_geomfromtext('Polygon((126.985 37.464, 126.980 37.429, 126.933 37.406, 126.910 37.432, 126.931 37.456, 126.985 37.464))', 4326));
 
 
 select * from aoi;
