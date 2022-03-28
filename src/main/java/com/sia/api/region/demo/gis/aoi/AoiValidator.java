@@ -3,10 +3,14 @@ package com.sia.api.region.demo.gis.aoi;
 import com.sia.api.region.demo.gis.common.Coordinatation;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * @author joonhokim
+ * @date 2022/03/28
+ * @description 요청 값에 대한 필드 조건 유효성 검사
+ */
 @Component
 public class AoiValidator {
 

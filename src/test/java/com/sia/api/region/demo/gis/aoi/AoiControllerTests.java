@@ -114,6 +114,7 @@ public class AoiControllerTests extends BaseTest {
         ;
     }
 
+
     @NotNull
     private List<Coordinatation> getCoordinatations() {
         List<Coordinatation> coords = new ArrayList<>();

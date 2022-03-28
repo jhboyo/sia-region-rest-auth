@@ -50,6 +50,11 @@ public class AoiController {
     }
 
 
+    /**
+     * @param aoiRequestDto 요청 값 매핑
+     * @param errors @Valid 에서 발생 한 값들 Errors객체에 매핑
+     * @return DB에 저장 되고 자동 생성 된 serial id 값 리턴
+     */
     @PostMapping("/aois")
     public ResponseEntity saveAoi(@RequestBody @Valid AoiRequestDto aoiRequestDto, Errors errors) {
 
@@ -87,6 +92,10 @@ public class AoiController {
     }
 
 
+    /**
+     * @param id uri에 포함 된 id 값을 가져와서 조회에 사용
+     * @return 조회 된 값의 json value와 links 들을 함께 리턴
+     */
     @GetMapping("/regions/{id}/aois/intersects")
     public ResponseEntity getAoi(@PathVariable Integer id) {
 
