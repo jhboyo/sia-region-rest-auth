@@ -106,7 +106,7 @@ operation::index[snippets='response-body,http-response,links']
 
 operation::get-events[snippets='response-fields,curl-request,http-response,links']
 
-[[resources-events-create]]
+[[resources-aoi-create]]
 === 이벤트 생성
 
 `POST` 요청을 사용해서 새 이벤트를 만들 수 있다.
@@ -125,4 +125,4 @@ operation::get-event[snippets='request-fields,curl-request,http-response,links']
 
 `PUT` 요청을 사용해서 기존 이벤트를 수정할 수 있다.
 
-operation::update-event[snippets='request-fields,curl-request,http-response,links']
+operation::update-aoi[snippets='request-fields,curl-request,http-response,links']

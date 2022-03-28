@@ -55,7 +55,7 @@ public class AoiControllerTests extends BaseTest {
     @DisplayName("관심지역 이벤트를 정상적으로 생성하는 테스트")
     public void createAoi() throws Exception {
 
-        AoiDto aoiDto = AoiDto.builder()
+        AoiResponseDto aoiDto = AoiResponseDto.builder()
                             .name("의왕시")
                              .build();
 

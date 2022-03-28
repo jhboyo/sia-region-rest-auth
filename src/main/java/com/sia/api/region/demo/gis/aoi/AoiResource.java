@@ -11,9 +11,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
  * @date 2022/03/28
  * @description 관심지역관련 self relation 링크 정보 전달
  */
-public class AoiResource extends EntityModel<AoiWrapper> {
-    public AoiResource(AoiWrapper aoiWrapper, AoiDto aoiDto, Link... links) {
+public class AoiResource extends EntityModel<Object> {
+    public AoiResource(AoiWrapper aoiWrapper, AoiResponseDto aoiDto, Link... links) {
         super(aoiWrapper, Arrays.asList(links));
         add(linkTo(AoiController.class).slash(aoiDto.getId()).withSelfRel());
+    }
+
+    public AoiResource(Aoi aoi, Link... links) {
+        super(aoi, Arrays.asList(links));
+        add(linkTo(AoiController.class).slash(aoi.getId()).withSelfRel());
     }
 }

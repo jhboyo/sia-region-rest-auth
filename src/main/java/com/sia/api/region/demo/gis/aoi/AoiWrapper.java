@@ -13,5 +13,5 @@ import java.util.List;
 @Setter
 public class AoiWrapper {
 
-    private List<AoiDto> aois;
+    private List<AoiResponseDto> aois;
 }

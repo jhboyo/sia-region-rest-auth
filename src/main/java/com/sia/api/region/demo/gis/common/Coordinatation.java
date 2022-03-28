@@ -12,8 +12,8 @@ import lombok.Setter;
 @Setter
 public class Coordinatation {
 
-    private Double xCoord;
+    private Double x;
 
-    private Double yCoord;
+    private Double y;
 
 }
