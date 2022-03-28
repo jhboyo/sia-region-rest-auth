@@ -41,7 +41,7 @@ public class AoiController {
     private ModelMapper modelMapper;
 
     /**
-     * 생성자를 통한 의존성 주입
+     * 생성자를 통한 의존성 주입(DI)
      * */
     public AoiController(AoiValidator aoiValidator, AoiRepository aoiRepository, ModelMapper modelMapper) {
         this.aoiValidator = aoiValidator;
@@ -76,15 +76,19 @@ public class AoiController {
 
         Integer newAoiId = newAoi.getId();
 
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(AoiController.class).slash(newAoiId);
+        URI createdUri = selfLinkBuilder.toUri();
+
         AoiResponseDto aoiResponseDto = new AoiResponseDto();
         aoiResponseDto.setId(newAoiId);
 
-        return ResponseEntity.ok(aoiResponseDto);
+        return ResponseEntity.created(createdUri).body(aoiResponseDto);
+
     }
 
 
     @GetMapping("/regions/{id}/aois/intersects")
-    public ResponseEntity getAoi(@PathVariable Integer id) throws Exception {
+    public ResponseEntity getAoi(@PathVariable Integer id) {
 
         Optional<Aoi> optionalAoi = this.aoiRepository.findById(id);
 
@@ -99,8 +103,7 @@ public class AoiController {
         List list = Arrays.stream(aoi.getArea().getCoordinates()).collect(Collectors.toList());
 
         // polygon 좌표를 리스트에 따로 담음
-        Coordinatation coordinatation = new Coordinatation();
-        List<Coordinatation> coords = getCoordinatations(list, coordinatation);
+        List<Coordinatation> coords = getCoordinatations(list, new Coordinatation());
 
         // modelMapper를 사용해서 데이터 매핑
         AoiResponseDto aoiDto = new AoiResponseDto();

@@ -1,14 +1,33 @@
 package com.sia.api.region.demo.gis.aoi;
 
 import com.sia.api.region.demo.common.BaseTest;
+import com.sia.api.region.demo.gis.common.Coordinatation;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 
 public class AoiControllerTests extends BaseTest {
 
@@ -48,16 +67,42 @@ public class AoiControllerTests extends BaseTest {
 
 
 
-
-
-    @Disabled
     @Test
-    @DisplayName("관심지역 이벤트를 정상적으로 생성하는 테스트")
+    @DisplayName("관심지역 aoi를 정상적으로 생성하는 테스트")
     public void createAoi() throws Exception {
 
-        AoiResponseDto aoiDto = AoiResponseDto.builder()
-                            .name("의왕시")
-                             .build();
+        List<Coordinatation> coords = getCoordinatations();
 
+        AoiResponseDto aoiDto = AoiResponseDto.builder()
+                            .name("수원시1")
+                            .area(coords)
+                            .build();
+
+        ResultActions resultActions = mockMvc.perform(post("/aois")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaTypes.HAL_JSON)
+                        .content(objectMapper.writeValueAsString(aoiDto)))
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("id").exists())
+                //.andExpect(jsonPath("name").exists())
+                //.andExpect(jsonPath("area").exists())
+                .andExpect(header().exists(HttpHeaders.LOCATION))
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE + ";charset=UTF-8"))
+
+        ;
     }
+
+    @NotNull
+    private List<Coordinatation> getCoordinatations() {
+        List<Coordinatation> coords = new ArrayList<>();
+        coords.add(new Coordinatation(127.02, 37.742));
+        coords.add(new Coordinatation(127.023, 37.664));
+        coords.add(new Coordinatation(126.945, 37.605));
+        coords.add(new Coordinatation(126.962, 37.692));
+        coords.add(new Coordinatation(127.02, 37.742));
+        return coords;
+    }
+
+
 }
