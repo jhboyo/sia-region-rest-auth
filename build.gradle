@@ -51,7 +51,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation "org.testcontainers:postgresql:1.16.3"
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -62,6 +61,16 @@ dependencies {
 
     implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.6.7.Final'
     implementation 'org.locationtech.jts:jts-core:1.18.2'
+
+    /* testcontainers */
+    testImplementation("org.testcontainers:postgresql:1.16.3")
+    testImplementation("org.testcontainers:junit-jupiter")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.testcontainers:testcontainers-bom:1.16.3")
+    }
 }
 
 tasks.named('test') {

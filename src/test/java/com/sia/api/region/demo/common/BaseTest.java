@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @Disabled
 public class BaseTest {
 

@@ -10,7 +10,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 public class IndexController {
 
-    //링크 정보만 리턴한다.
 
     /**
      * @author joonhokim
