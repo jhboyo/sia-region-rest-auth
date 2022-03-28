@@ -2,6 +2,8 @@ package com.sia.api.region.demo.gis.aoi;
 
 import com.sia.api.region.demo.common.ErrorsResource;
 import com.sia.api.region.demo.gis.common.Coordinatation;
+import com.sia.api.region.demo.gis.common.FieldValidator;
+import com.sia.api.region.demo.gis.common.ResponseDto;
 import org.locationtech.jts.geom.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.EntityModel;
@@ -36,14 +38,14 @@ public class AoiController {
 
     private AoiRepository aoiRepository;
 
-    private AoiValidator aoiValidator;
+    private FieldValidator aoiValidator;
 
     private ModelMapper modelMapper;
 
     /**
      * 생성자를 통한 의존성 주입(DI)
      * */
-    public AoiController(AoiValidator aoiValidator, AoiRepository aoiRepository, ModelMapper modelMapper) {
+    public AoiController(FieldValidator aoiValidator, AoiRepository aoiRepository, ModelMapper modelMapper) {
         this.aoiValidator = aoiValidator;
         this.aoiRepository = aoiRepository;
         this.modelMapper = modelMapper;
@@ -84,7 +86,7 @@ public class AoiController {
         WebMvcLinkBuilder selfLinkBuilder = linkTo(AoiController.class).slash(newAoiId);
         URI createdUri = selfLinkBuilder.toUri();
 
-        AoiResponseDto aoiResponseDto = new AoiResponseDto();
+        ResponseDto aoiResponseDto = new ResponseDto();
         aoiResponseDto.setId(newAoiId);
 
         return ResponseEntity.created(createdUri).body(aoiResponseDto);
@@ -115,12 +117,12 @@ public class AoiController {
         List<Coordinatation> coords = getCoordinatations(list, new Coordinatation());
 
         // modelMapper를 사용해서 데이터 매핑
-        AoiResponseDto aoiDto = new AoiResponseDto();
+        ResponseDto aoiDto = new ResponseDto();
         modelMapper.map(aoi, aoiDto);
         aoiDto.setArea(coords);
 
         // 리스트에 dto 데이터를 담은 후
-        List<AoiResponseDto> aoiDtoList = new ArrayList<>();
+        List<ResponseDto> aoiDtoList = new ArrayList<>();
         aoiDtoList.add(aoiDto);
 
         // 최종 wrapper 객체에 리스트 데이터를 담음

@@ -1,6 +1,5 @@
-package com.sia.api.region.demo.gis.aoi;
+package com.sia.api.region.demo.gis.common;
 
-import com.sia.api.region.demo.gis.common.Coordinatation;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import java.util.List;
@@ -12,11 +11,11 @@ import java.util.List;
  * @description 요청 값에 대한 필드 조건 유효성 검사
  */
 @Component
-public class AoiValidator {
+public class FieldValidator {
 
-    public void validate(AoiRequestDto aoiRequestDto, Errors errors) {
+    public void validate(RequestDto requestDto, Errors errors) {
 
-        List<Coordinatation> coords = aoiRequestDto.getArea();
+        List<Coordinatation> coords = requestDto.getArea();
 
         if (coords.size() < 5) {
             errors.reject("wrongCoordsCount", "Wrong polygon numbers");
@@ -26,7 +25,7 @@ public class AoiValidator {
             if (coords.get(i).getX() == null || coords.get(i).getY() == null) {
                 errors.rejectValue("area", "hasNullCoordsValue", "coords has null value");
             }
-            if (aoiRequestDto.getName().isBlank() || aoiRequestDto.getName() == null) {
+            if (requestDto.getName().isBlank() || requestDto.getName() == null) {
                 errors.rejectValue("name", "blankNameValue", "name is blank");
             }
             // Todo add other fields

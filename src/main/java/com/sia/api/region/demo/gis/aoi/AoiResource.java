@@ -1,5 +1,6 @@
 package com.sia.api.region.demo.gis.aoi;
 
+import com.sia.api.region.demo.gis.common.ResponseDto;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
  * @description 관심지역관련 self relation 링크 정보 전달
  */
 public class AoiResource extends EntityModel<Object> {
-    public AoiResource(AoiWrapper aoiWrapper, AoiResponseDto aoiDto, Link... links) {
+    public AoiResource(AoiWrapper aoiWrapper, ResponseDto aoiDto, Link... links) {
         super(aoiWrapper, Arrays.asList(links));
         add(linkTo(AoiController.class).slash(aoiDto.getId()).withSelfRel());
     }

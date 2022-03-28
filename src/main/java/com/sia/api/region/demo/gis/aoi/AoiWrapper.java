@@ -1,5 +1,6 @@
 package com.sia.api.region.demo.gis.aoi;
 
+import com.sia.api.region.demo.gis.common.ResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
@@ -13,5 +14,5 @@ import java.util.List;
 @Setter
 public class AoiWrapper {
 
-    private List<AoiResponseDto> aois;
+    private List<ResponseDto> aois;
 }
