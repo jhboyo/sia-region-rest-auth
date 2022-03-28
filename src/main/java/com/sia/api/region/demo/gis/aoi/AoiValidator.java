@@ -21,13 +21,12 @@ public class AoiValidator {
         for (int i =0; i<coords.size(); i++) {
             if (coords.get(i).getX() == null || coords.get(i).getY() == null) {
                 errors.rejectValue("area", "hasNullCoordsValue", "coords has null value");
-
             }
+            if (aoiRequestDto.getName().isBlank() || aoiRequestDto.getName() == null) {
+                errors.rejectValue("name", "blankNameValue", "name is blank");
+            }
+            // Todo add other fields
         }
-
-
-        // Todo add other fields
-
 
     }
 }

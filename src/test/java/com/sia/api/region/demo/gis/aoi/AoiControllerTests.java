@@ -68,7 +68,7 @@ public class AoiControllerTests extends BaseTest {
 
 
     @Test
-    @DisplayName("관심지역 aoi를 정상적으로 생성하는 테스트")
+    @DisplayName("aoi를 정상적으로 생성하는 테스트")
     public void createAoi() throws Exception {
 
         List<Coordinatation> coords = getCoordinatations();
@@ -90,6 +90,27 @@ public class AoiControllerTests extends BaseTest {
                 .andExpect(header().exists(HttpHeaders.LOCATION))
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE + ";charset=UTF-8"))
 
+        ;
+    }
+
+    @Test
+    @DisplayName("aoi 입력값이 비어 있는 경우에 에러가 발생하는 테스트")
+    public void createAoi_BadRequest_Empty_Input() throws Exception {
+
+        // set empty value
+        List<Coordinatation> coords = new ArrayList<>();
+
+        AoiResponseDto aoiDto = AoiResponseDto.builder()
+                                            .name("수원시3")
+                                            .area(coords)
+                                            .build();
+
+        this.mockMvc.perform(post("/aois")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(objectMapper.writeValueAsString(aoiDto))
+                )
+                .andExpect(status().isBadRequest())
         ;
     }
 
