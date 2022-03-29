@@ -1,11 +1,4 @@
-## API GITHUB URL
-[github](https://github.com/jhboyo/sia-region-rest-api-demo).
-
-## DB Table 작성 쿼리(id 추가)
-### 프로젝트 루트 경로에 query.txt
-
-
-## 프로그램 실행 순
+## 프로그램 실행 순서
 ### 1. Dockerfile로 이미지 만들기
 image build with `Dockerfile`
 ```
@@ -34,3 +27,12 @@ $ curl -X POST "Content-Type: application/json; charset=utf-8" -d \
 ```
 http://localhost:8081/regions/1/aois/intersects
 ```
+
+***
+
+
+
+## DB Table 작성 쿼리
+==전달 받은 테이블에 serial id 값 추가==
+==쿼리파일 경로: 프로젝트 루트 경로에 query.txt==
+
