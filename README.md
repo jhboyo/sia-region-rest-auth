@@ -33,6 +33,6 @@ http://localhost:8081/regions/1/aois/intersects
 
 
 ## DB Table 작성 쿼리
-++전달 받은 테이블에 serial id 값 추가++
-++쿼리파일 경로: 프로젝트 루트 경로에 query.txt++
+> 전달 받은 테이블에 serial id 값 추가
+> 쿼리파일 경로: 프로젝트 루트 경로에 query.txt
 
