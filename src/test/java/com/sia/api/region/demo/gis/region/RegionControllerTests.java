@@ -37,7 +37,7 @@ public class RegionControllerTests extends BaseTest {
                 .area(coords)
                 .build();
 
-        ResultActions resultActions = mockMvc.perform(post("/regions")
+        ResultActions resultActions = mockMvc.perform(post("/sia/regions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaTypes.HAL_JSON)
                         .content(objectMapper.writeValueAsString(aoiDto)))
@@ -64,7 +64,7 @@ public class RegionControllerTests extends BaseTest {
                 .area(coords)
                 .build();
 
-        this.mockMvc.perform(post("/regions")
+        this.mockMvc.perform(post("/sia/regions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(aoiDto))

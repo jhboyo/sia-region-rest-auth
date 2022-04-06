@@ -1,5 +1,8 @@
 package com.sia.api.region.demo.gis.aoi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sia.api.region.demo.account.LoginDto;
+import com.sia.api.region.demo.account.TokenDto;
 import com.sia.api.region.demo.common.BaseTest;
 import com.sia.api.region.demo.gis.common.Coordinatation;
 import com.sia.api.region.demo.gis.common.ResponseDto;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
@@ -36,15 +40,16 @@ public class AoiControllerTests extends BaseTest {
         int regionId = 1;
 
         // When & Then
-        this.mockMvc.perform(get("/regions/{id}/aois/intersects", regionId))
+      this.mockMvc.perform(get("/sia/regions/{id}/aois/intersects", regionId))
                 .andExpect(status().isOk())
-//                .andExpect(jsonPath("name").exists())
-//                .andExpect(jsonPath("id").exists())
-//                .andExpect(jsonPath("area").exists())
-//                .andExpect(jsonPath("_links.self").exists())
+                .andExpect(jsonPath("aois").exists())
+                .andExpect(jsonPath("aois").isArray())
+                .andExpect(jsonPath("aois").isNotEmpty())
+                .andExpect(jsonPath("_links.self").exists())
                 .andExpect(jsonPath("_links.profile").exists())
                 .andDo(document("get-an-aoi"))
         ;
+
     }
 
     @Test
@@ -54,7 +59,7 @@ public class AoiControllerTests extends BaseTest {
         int regionId = 1212120012;
 
         // When & Then
-        this.mockMvc.perform(get("/regions/{id}/aois/intersects", regionId))
+        this.mockMvc.perform(get("/sia/regions/{id}/aois/intersects", regionId))
                 .andExpect(status().isNotFound())
         ;
     }
@@ -62,17 +67,35 @@ public class AoiControllerTests extends BaseTest {
 
 
     @Test
-    @DisplayName("aoi를 정상적으로 생성하는 테스트")
+    @DisplayName("token을 발급받고 권한에 따라 aoi를 정상적으로 생성하는 테스트")
     public void createAoi() throws Exception {
+
+        //USER 권한으로 Token 요청 - 컨트롤러에서 접근 권한을 ADMIN 으로 제한하면 Access Denied 에러가 발생해야 한다!
+        LoginDto loginDto = new LoginDto();
+        loginDto.setUsername("joonho3");
+        loginDto.setPassword("joonho3");
+
+        ResultActions resultActionsForToken = mockMvc.perform(post("/api/authenticate")
+                                                        .contentType(MediaType.APPLICATION_JSON)
+                                                        .accept(MediaTypes.HAL_JSON)
+                                                        .content(objectMapper.writeValueAsString(loginDto)))
+                                                .andDo(print())
+                                                .andExpect(status().isOk())
+                                                ;
+
+        MvcResult result = resultActionsForToken.andReturn();
+
+        TokenDto tokenDto = new ObjectMapper().readValue(result.getResponse().getContentAsString(), TokenDto.class);
 
         List<Coordinatation> coords = getCoordinatations();
 
         ResponseDto aoiDto = ResponseDto.builder()
-                            .name("수원시1")
+                            .name("수원시4")
                             .area(coords)
                             .build();
 
-        ResultActions resultActions = mockMvc.perform(post("/aois")
+        ResultActions resultActions = mockMvc.perform(post("/sia/aois")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaTypes.HAL_JSON)
                         .content(objectMapper.writeValueAsString(aoiDto)))
@@ -99,7 +122,7 @@ public class AoiControllerTests extends BaseTest {
                                             .area(coords)
                                             .build();
 
-        this.mockMvc.perform(post("/aois")
+        this.mockMvc.perform(post("/sia/aois")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(aoiDto))

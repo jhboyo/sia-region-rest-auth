@@ -29,7 +29,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
  * @description 행정지역 컨트롤러로 Http Method 요청에 대한 RESTFul API
  */
 @Controller
-@RequestMapping(value = "/", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/sia", produces = MediaTypes.HAL_JSON_VALUE)
 public class RegionController {
 
     private RegionRepository regionRepository;

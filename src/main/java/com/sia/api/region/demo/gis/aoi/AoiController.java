@@ -11,6 +11,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
  * @description 관심지역 컨트롤러로 Http Method 요청에 대한 RESTFul API
  */
 @Controller
-@RequestMapping(value = "/", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/sia", produces = MediaTypes.HAL_JSON_VALUE)
 public class AoiController {
 
     private AoiRepository aoiRepository;
@@ -58,6 +59,7 @@ public class AoiController {
      * @return DB에 저장 되고 자동 생성 된 serial id 값 리턴
      */
     @PostMapping("/aois")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')") // USER 와 ADMIN Role 모두 호출 가능
     public ResponseEntity saveAoi(@RequestBody @Valid AoiRequestDto aoiRequestDto, Errors errors) {
 
         // validation
