@@ -79,7 +79,7 @@ public class RegionController {
 
         Integer newRegionId = newRegion.getId();
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(RegionController.class).slash(newRegionId);
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(RegionController.class);
         URI createdUri = selfLinkBuilder.toUri();
 
         ResponseDto responseDto = new ResponseDto();
