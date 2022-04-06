@@ -79,13 +79,13 @@ public class AoiController {
                 new Coordinate(aoiRequestDto.getArea().get(4).getX(), aoiRequestDto.getArea().get(4).getY()),
         }), null);
 
-
         aoi.setArea(polygon);
         Aoi newAoi = this.aoiRepository.save(aoi);
 
         Integer newAoiId = newAoi.getId();
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(AoiController.class).slash(newAoiId);
+        //self link 전달
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(AoiController.class);
         URI createdUri = selfLinkBuilder.toUri();
 
         ResponseDto aoiResponseDto = new ResponseDto();
