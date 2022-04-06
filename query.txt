@@ -17,9 +17,6 @@
 
 select * from aoi;
 
-
-
-
 select * from region;
 
 
@@ -36,3 +33,21 @@ select * from region;
 -- (default, '과천시', st_geomfromtext('Polygon((126.998 37.463, 127.028 37.436, 126.992 37.403, 126.965 37.421, 126.998 37.463))', 4326)),
 -- (default, '의정부시', st_geomfromtext('Polygon((127.025 37.766, 127.096 37.766, 127.099 37.724, 127.035 37.705, 127.020 37.742, 127.025 37.766))', 4326));
 
+
+## 인증
+
+INSERT INTO ACCOUNT (USER_ID, USERNAME, PASSWORD, NICKNAME, ACTIVATED) VALUES (1, 'admin', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'admin', true);
+INSERT INTO ACCOUNT (USER_ID, USERNAME, PASSWORD, NICKNAME, ACTIVATED) VALUES (2, 'user', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'user', true);
+
+INSERT INTO AUTHORITY (AUTHORITY_NAME) values ('ROLE_USER');
+INSERT INTO AUTHORITY (AUTHORITY_NAME) values ('ROLE_ADMIN');
+
+INSERT INTO ACCOUNT_AUTHORITY (USER_ID, AUTHORITY_NAME) values (1, 'ROLE_USER');
+INSERT INTO ACCOUNT_AUTHORITY (USER_ID, AUTHORITY_NAME) values (1, 'ROLE_ADMIN');
+INSERT INTO ACCOUNT_AUTHORITY (USER_ID, AUTHORITY_NAME) values (2, 'ROLE_USER');
+
+
+
+select * from account;
+select * from authority;
+select * from account_authority;
