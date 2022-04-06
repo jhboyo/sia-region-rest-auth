@@ -92,7 +92,6 @@ public class AoiController {
         aoiResponseDto.setId(newAoiId);
 
         return ResponseEntity.created(createdUri).body(aoiResponseDto);
-
     }
 
 

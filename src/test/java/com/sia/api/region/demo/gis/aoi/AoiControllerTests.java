@@ -114,6 +114,23 @@ public class AoiControllerTests extends BaseTest {
     @DisplayName("aoi 입력값이 비어 있는 경우에 에러가 발생하는 테스트")
     public void createAoi_BadRequest_Empty_Input() throws Exception {
 
+        //USER 권한으로 Token 요청 - 컨트롤러에서 접근 권한을 ADMIN 으로 제한하면 Access Denied 에러가 발생해야 한다!
+        LoginDto loginDto = new LoginDto();
+        loginDto.setUsername("joonho3");
+        loginDto.setPassword("joonho3");
+
+        ResultActions resultActionsForToken = mockMvc.perform(post("/api/authenticate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaTypes.HAL_JSON)
+                        .content(objectMapper.writeValueAsString(loginDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                ;
+
+        MvcResult result = resultActionsForToken.andReturn();
+
+        TokenDto tokenDto = new ObjectMapper().readValue(result.getResponse().getContentAsString(), TokenDto.class);
+
         // set empty value
         List<Coordinatation> coords = new ArrayList<>();
 
@@ -123,6 +140,7 @@ public class AoiControllerTests extends BaseTest {
                                             .build();
 
         this.mockMvc.perform(post("/sia/aois")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(aoiDto))

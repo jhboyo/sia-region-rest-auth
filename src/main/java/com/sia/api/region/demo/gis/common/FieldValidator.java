@@ -30,6 +30,5 @@ public class FieldValidator {
             }
             // Todo add other fields
         }
-
     }
 }

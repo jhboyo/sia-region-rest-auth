@@ -33,7 +33,7 @@ public class RegionControllerTests extends BaseTest {
         List<Coordinatation> coords = getCoordinatations();
 
         ResponseDto aoiDto = ResponseDto.builder()
-                .name("과천시2")
+                .name("과천시3")
                 .area(coords)
                 .build();
 
@@ -44,8 +44,6 @@ public class RegionControllerTests extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").exists())
-                //.andExpect(jsonPath("name").exists())
-                //.andExpect(jsonPath("area").exists())
                 .andExpect(header().exists(HttpHeaders.LOCATION))
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE + ";charset=UTF-8"))
 

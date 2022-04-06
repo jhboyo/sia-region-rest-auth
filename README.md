@@ -29,7 +29,11 @@ http://localhost:8081/regions/1/aois/intersects
 ```
 
 ***
-
+### 5. Document Build
+```
+sudo ./gradlew bootJar
+localhost:8080/docs/index.html
+```
 
 
 ## DB Table 작성 쿼리
